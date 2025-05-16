@@ -585,11 +585,20 @@ static void handleUpdate()
   String message;
   digitalWrite(LED_BUILTIN, HIGH);
 
-  if (step < 0)
+  if (step < 0) {
     pages = OICan::StartUpdate(server.arg("file"));
+    // Add extra delay after starting the update process to account for slower CAN speed
+    delay(500); 
+  }
   else {
-    while (OICan::GetCurrentUpdatePage() < step) {
+    // Add a timeout mechanism to prevent hanging
+    unsigned long startTime = millis();
+    const unsigned long timeout = 5000; // 5 seconds timeout
+    
+    while (OICan::GetCurrentUpdatePage() < step && (millis() - startTime < timeout)) {
       OICan::Loop();
+      // Add a small delay between loop iterations to give more time for CAN communication
+      delay(50);
     }
   }
 

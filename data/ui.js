@@ -554,6 +554,16 @@ var ui = {
 	runUpdateStep: function(step, file)
 	{
 		var runUpdateRequest = new XMLHttpRequest();
+		// Add a longer timeout for the slower CAN speed
+		runUpdateRequest.timeout = 60000; // 60 seconds timeout
+		
+		// Add timeout handler
+		runUpdateRequest.ontimeout = function() {
+			console.log("Update request timed out. Retrying...");
+			// Retry the same step after a timeout
+			ui.runUpdateStep(step, file);
+		};
+		
 		runUpdateRequest.onload = function()
 		{
 			step++;
