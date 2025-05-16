@@ -72,6 +72,7 @@ var inverter = {
   sendCmd: function(cmd, replyFunc, repeat)
   {
     var xmlhttp=new XMLHttpRequest();
+    xmlhttp.timeout = 30000; // Set timeout to 30 seconds for large JSON responses
     var req = "/cmd?cmd=" + cmd;
 
     xmlhttp.onload = function() {
