@@ -554,8 +554,9 @@ var ui = {
 	runUpdateStep: function(step, file)
 	{
 		var runUpdateRequest = new XMLHttpRequest();
-		// Add a longer timeout for the slower CAN speed
-		runUpdateRequest.timeout = 60000; // 60 seconds timeout
+		// Set a reasonable timeout for 250k baud CAN speed
+		// With minimal delays in the server-side code, we can use a shorter timeout
+		runUpdateRequest.timeout = 20000; // 20 seconds timeout
 		
 		// Add timeout handler
 		runUpdateRequest.ontimeout = function() {
