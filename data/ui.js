@@ -556,7 +556,7 @@ var ui = {
 		var runUpdateRequest = new XMLHttpRequest();
 		// Set a reasonable timeout for 250k baud CAN speed
 		// With minimal delays in the server-side code, we can use a shorter timeout
-		runUpdateRequest.timeout = 20000; // 20 seconds timeout
+		runUpdateRequest.timeout = 40000; // 40 seconds timeout
 		
 		// Add timeout handler
 		runUpdateRequest.ontimeout = function() {
